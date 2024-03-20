@@ -1,0 +1,26 @@
+helm template harbor harbor/harbor \
+--set expose.tls.secret.secretName=wild-cert-secret \
+--set expose.tls.certSource=secret \
+--set expose.ingress.hosts.core=harbor.rcloud-cp.klovercloud.io \
+--set expose.ingress.className=nginx \
+--set externalURL=https://harbor.rcloud-cp.klovercloud.io \
+--set persistence.persistentVolumeClaim.registry.storageClass=csi-disk \
+--set persistence.persistentVolumeClaim.registry.size=50Gi \
+--set persistence.persistentVolumeClaim.jobservice.jobLog.storageClass=csi-disk \
+--set persistence.persistentVolumeClaim.database.storageClass=csi-disk \
+--set persistence.persistentVolumeClaim.database.size=5Gi \
+--set persistence.persistentVolumeClaim.redis.storageClass=csi-disk \
+--set persistence.persistentVolumeClaim.redis.size=2Gi \
+--set persistence.persistentVolumeClaim.trivy.storageClass=csi-disk \
+--set persistence.persistentVolumeClaim.trivy.size=5Gi \
+--set harborAdminPassword="admin@robi1234" \
+--set cache.enabled=true \
+--set database.type=external > harbor.yaml
+
+
+or
+
+
+Update the values file and create template using values.yaml
+
+helm template kc-harbor harbor/harbor -f values.yaml > harbor.yaml
